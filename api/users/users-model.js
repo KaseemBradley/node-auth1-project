@@ -29,7 +29,13 @@ function findById(user_id) {
 /**
   resolves to the newly inserted user { user_id, username }
  */
-function add(user) {}
+function add(user) {
+  return db("users")
+    .insert(user)
+    .then((ids) => {
+      return findById(ids[0]);
+    });
+}
 
 // Don't forget to add these to the `exports` object so they can be required in other modules
 
