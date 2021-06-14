@@ -42,7 +42,15 @@ async function checkUsernameFree(req, res, next) {
     "message": "Invalid credentials"
   }
 */
-function checkUsernameExists() {}
+async function checkUsernameExists(req, res, next) {
+  const { username } = req.body;
+  const user = await findBy({ username });
+  if (!user) {
+    res.status(401).json({ message: "invalid credentials" });
+  } else {
+    next();
+  }
+}
 
 /*
   If password is missing from req.body, or if it's 3 chars or shorter
@@ -52,7 +60,13 @@ function checkUsernameExists() {}
     "message": "Password must be longer than 3 chars"
   }
 */
-function checkPasswordLength() {}
+function checkPasswordLength(req, res, next) {
+  if (!req.body.password || req.body.password.length <= 3) {
+    res.status(422).json({ message: "Password must be longer than 3 chars" });
+  } else {
+    next();
+  }
+}
 
 // Don't forget to add these to the `exports` object so they can be required in other modules
 
