@@ -17,7 +17,14 @@ function findBy(filter) {
 /**
   resolves to the user { user_id, username } with the given user_id
  */
-function findById(user_id) {}
+function findById(user_id) {
+  return db("users")
+    .select("user_id", "username")
+    .where({ user_id })
+    .then((data) => {
+      return data[0];
+    });
+}
 
 /**
   resolves to the newly inserted user { user_id, username }
@@ -25,3 +32,10 @@ function findById(user_id) {}
 function add(user) {}
 
 // Don't forget to add these to the `exports` object so they can be required in other modules
+
+module.exports = {
+  find,
+  findBy,
+  findById,
+  add,
+};
