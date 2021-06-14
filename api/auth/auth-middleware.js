@@ -24,7 +24,15 @@ function restricted(req, res, next) {
     "message": "Username taken"
   }
 */
-function checkUsernameFree() {}
+async function checkUsernameFree(req, res, next) {
+  const { username } = req.body;
+  const user = await findBy({ username });
+  if (user.length != 0) {
+    res.status(422).json({ message: "Username taken" });
+  } else {
+    next();
+  }
+}
 
 /*
   If the username in req.body does NOT exist in the database
