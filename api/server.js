@@ -17,6 +17,7 @@ const cors = require("cors");
 
 const server = express();
 const authRouter = require("./auth/auth-router");
+const userRouter = require("./users/users-router");
 
 server.use(helmet());
 server.use(express.json());
@@ -27,6 +28,7 @@ server.get("/", (req, res) => {
 });
 
 server.use("/api/auth", authRouter);
+server.use("/api/users", userRouter);
 
 server.use((err, req, res, next) => {
   // eslint-disable-line
